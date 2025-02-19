@@ -31,6 +31,7 @@ EOF
 echo "created"
 
 echo "finding python"
+find_python3
 # Set the python binary to use.
 DRIVERS_TOOLS_PYTHON=$(find_python3 2>/dev/null)
 echo "finding python...completed."
