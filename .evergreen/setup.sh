@@ -14,22 +14,27 @@ if [[ -z "$PROJECT_DIRECTORY" ]]; then
 fi
 
 # Create failing test result file.
-echo '{"results": [{ "status": "FAIL", "test_file": "Build", "log_raw": "No test-results.json found was created"  } ]}' > ${PROJECT_DIRECTORY}/test-results.json
+echo '{"results": [{ "status": "FAIL", "test_file": "Build", "log_raw": "No test-results.json found was created"  } ]}' >${PROJECT_DIRECTORY}/test-results.json
 
 # Create a stub mongo-orchestration results file.
-echo '{"results": [{ "status": "PASS", "test_file": "Build", "log_raw": "Stub file for mongo-orchestration results"  } ]}' > ${DRIVERS_TOOLS}/results.json
+echo '{"results": [{ "status": "PASS", "test_file": "Build", "log_raw": "Stub file for mongo-orchestration results"  } ]}' >${DRIVERS_TOOLS}/results.json
 
+echo "creating logfile"
 # Ensure there is at least one log file.
-cat << EOF > ${DRIVERS_TOOLS}/.evergreen/inputs.log
+cat <<EOF >${DRIVERS_TOOLS}/.evergreen/inputs.log
 PROJECT_DIRECTORY=$PROJECT_DIRECTORY
 DRIVERS_TOOLS=$DRIVERS_TOOLS
 OS=${OS:-}
 PATH=$PATH
 EOF
 
+echo "created"
+
+echo "finding python"
 # Set the python binary to use.
 DRIVERS_TOOLS_PYTHON=$(find_python3 2>/dev/null)
-echo "DRIVERS_TOOLS_PYTHON=$DRIVERS_TOOLS_PYTHON" >> $DRIVERS_TOOLS/.env
+echo "finding python...completed."
+echo "DRIVERS_TOOLS_PYTHON=$DRIVERS_TOOLS_PYTHON" >>$DRIVERS_TOOLS/.env
 
 # Install the clis in this folder.
 bash $SCRIPT_DIR/install-cli.sh $SCRIPT_DIR
